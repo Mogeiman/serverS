@@ -1,11 +1,8 @@
-const express = require('express')
 const User = require('./../models/User')
-
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
 require('dotenv').config('./.env')
 
-//Adding admin
+//Adding usen
 exports.addadmin = async (req, res) => {
     let {name, email, password, liscence, latitude, longitude} = req.body;
     name= name.trim()
@@ -77,15 +74,7 @@ exports.addadmin = async (req, res) => {
         })
     }
 };
-
-// Athenticating token
-exports.authentication = (req,res) => {
-  res.send({messege:"authentication successful", user:req.user})
-}
-
 //Verifying log in information recieved from the front-end
-
-
 exports.login = async(req, res) => {
     let { email, password} = req.body;
     email = email.trim()
@@ -132,36 +121,4 @@ exports.login = async(req, res) => {
         })
     }
 
-}
-//Start a session if req.session.user has been set
-// exports.loginSession = (req,res) => {
-//   if(req.session.user){
-//     res.send({loggedIn: true, user: req.session.user})
-//   }else{
-//     res.send({loggedIn: false})
-    
-//   }
-// }
-
-exports.alladmin = (req, res) =>{
-  admin.findAll({
-    attributes: ['id', 'username','password'],
-    include:[Files]
-  }).then(user => {
-	  res.json(user);
-	});
-}
-
-
-//Loging out by destroying the session
-exports.logOut = (req, res) => {
-  req.session.destroy(function(err){
-    if(err){
-       console.log(err);
-    }else{
-        return res.status(200).json({loggedIn: false,auth:false,messege:"You have been logged Out"});
-    }
- });
-
-  
 }
